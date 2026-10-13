@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { PinIcon } from "./icons";
 
 /** 네이버 클라우드 플랫폼 > Maps > Application 의 Client ID (Dynamic Map 사용 설정 필요) */
@@ -44,9 +44,26 @@ function loadSdk(): Promise<NaverMaps> {
 
 type Props = { lat: number; lng: number; name: string; zoom?: number };
 
+type Failure = "no-key" | "auth" | "script";
+const FAILURE_TEXT: Record<Failure, string> = {
+  "no-key": "NEXT_PUBLIC_NAVER_MAP_CLIENT_ID 환경변수가 빌드에 포함되지 않았습니다. Vercel에 설정 후 재배포하세요.",
+  auth: "네이버 지도 인증 실패: Client ID 또는 Web 서비스 URL(현재 도메인) 등록을 확인하세요.",
+  script: "네이버 지도 스크립트를 불러오지 못했습니다. (네트워크/광고 차단 확인)",
+};
+
+const noopSubscribe = () => () => {};
+/** 주소에 ?debug 가 있으면 지도 실패 원인을 화면에 표시 */
+const useDebug = () =>
+  useSyncExternalStore(noopSubscribe, () => window.location.search.includes("debug"), () => false);
+
 export default function NaverMap({ lat, lng, name, zoom = 16 }: Props) {
   const ref = useRef<HTMLDivElement>(null);
-  const [failed, setFailed] = useState(!CLIENT_ID);
+  const [failure, setFailure] = useState<Failure | null>(CLIENT_ID ? null : "no-key");
+  const debug = useDebug();
+
+  useEffect(() => {
+    if (failure) console.warn(`[NaverMap] ${FAILURE_TEXT[failure]} (origin: ${window.location.origin})`);
+  }, [failure]);
 
   useEffect(() => {
     const el = ref.current;
@@ -56,7 +73,7 @@ export default function NaverMap({ lat, lng, name, zoom = 16 }: Props) {
     let map: { destroy?: () => void } | undefined;
 
     // 인증 실패(도메인 미등록, 잘못된 키 등) 시 SDK가 호출하는 전역 콜백
-    window.navermap_authFailure = () => setFailed(true);
+    window.navermap_authFailure = () => setFailure("auth");
 
     const init = async () => {
       try {
@@ -77,7 +94,7 @@ export default function NaverMap({ lat, lng, name, zoom = 16 }: Props) {
         });
         new maps.Marker({ position, map, title: name });
       } catch {
-        if (!cancelled) setFailed(true);
+        if (!cancelled) setFailure((f) => f ?? "script");
       }
     };
 
@@ -100,11 +117,12 @@ export default function NaverMap({ lat, lng, name, zoom = 16 }: Props) {
     };
   }, [lat, lng, name, zoom]);
 
-  if (failed) {
+  if (failure) {
     return (
-      <div className="naver-map naver-map--fallback">
+      <div className="naver-map naver-map--fallback" data-failure={failure}>
         <PinIcon width={28} height={28} />
         <p>{name}</p>
+        {debug && <p className="naver-map__debug">{FAILURE_TEXT[failure]}</p>}
       </div>
     );
   }

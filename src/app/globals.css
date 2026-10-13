@@ -631,6 +631,13 @@ img {
 .naver-map--fallback p {
   color: var(--text-soft);
 }
+.naver-map--fallback .naver-map__debug {
+  max-width: 300px;
+  padding: 0 16px;
+  color: #c24b4b;
+  font-size: 12px;
+  text-align: center;
+}
 
 /* 네이버 지도 길찾기 */
 .directions {
