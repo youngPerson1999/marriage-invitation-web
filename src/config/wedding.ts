@@ -20,7 +20,7 @@ export type Account = {
 
 export const wedding = {
   /** 예식 일시 (한국 시간, ISO 8601) */
-  date: "2028-03-25T13:30:00+09:00",
+  date: "2028-03-25T14:00:00+09:00",
   /** 처음 만난 날 ("함께 보낸 소중한 날" 계산용) */
   firstMetDate: "2022-01-11T00:00:00+09:00",
   /** 달력에 빨간 날로 표시할 공휴일 (YYYY-MM-DD) */
@@ -29,7 +29,7 @@ export const wedding = {
   groom: {
     name: "고영인",
     shortName: "영인",
-    phone: "010-0000-0000",
+    phone: "010-9767-3437",
     relation: "아들",
     father: { name: "김건호", deceased: true, phone: "010-0000-0000" } as Person,
     mother: { name: "이미자", phone: "010-0000-0000" } as Person,
@@ -44,7 +44,7 @@ export const wedding = {
   bride: {
     name: "선나리",
     shortName: "나리",
-    phone: "010-0000-0000",
+    phone: "010-3630-3700",
     relation: "딸",
     father: { name: "이주명", deceased: true, phone: "010-0000-0000" } as Person,
     mother: { name: "유수지", phone: "010-0000-0000" } as Person,
@@ -120,7 +120,7 @@ export const wedding = {
   /** 공유/검색 미리보기 */
   meta: {
     title: "고영인 ♥ 선나리 결혼합니다",
-    description: "2028년 3월 25일 토요일 오후 1시 30분, 고려대학교 교우회관 권오섭홀",
+    description: "2028년 3월 25일 토요일 오후 2시, 고려대학교 교우회관 권오섭홀",
     ogImage: "/images/og.jpg",
   },
 } as const;
