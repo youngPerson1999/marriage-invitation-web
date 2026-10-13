@@ -119,3 +119,16 @@ export const MusicOffIcon = (p: P) => (
     ))}
   </svg>
 );
+
+export const TransitIcon = (p: P) => (
+  <svg {...base} {...p}>
+    <rect x="5" y="3" width="14" height="14" rx="3" />
+    <path d="M5 11h14M9 14h.01M15 14h.01M8 21l2-4M16 21l-2-4" />
+  </svg>
+);
+export const CarIcon = (p: P) => (
+  <svg {...base} {...p}>
+    <path d="M5 16V11l2-5h10l2 5v5M3.5 16h17v3h-17zM5 11h14" />
+    <path d="M7.5 13.5h.01M16.5 13.5h.01" />
+  </svg>
+);

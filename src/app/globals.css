@@ -636,40 +636,28 @@ img {
 
 /* 네이버 지도 길찾기 */
 .directions {
-  margin: 0 -28px;
-  padding: 18px 20px 20px;
-  background: var(--surface);
-  border-bottom: 1px solid var(--line);
+  padding: 24px 0 8px;
 }
 .directions__title {
-  margin-bottom: 10px;
+  margin-bottom: 12px;
   color: var(--text-soft);
   font-size: 13px;
 }
 .directions__buttons {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 8px;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
 }
+/* 연락하기 버튼과 같은 아웃라인 스타일 */
 .directions__btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  min-height: 46px;
-  border-radius: 10px;
-  background: #03c75a; /* 네이버 그린 */
-  color: #fff;
-  font-size: 14px;
-  font-weight: 600;
-}
-.directions__btn:active {
-  opacity: 0.85;
+  padding: 0 12px;
+  color: var(--accent);
 }
 .location__apps {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  margin: 0 -28px;
+  margin: 24px -28px 0;
+  border-top: 1px solid var(--line);
   border-bottom: 1px solid var(--line);
   background: var(--surface);
 }

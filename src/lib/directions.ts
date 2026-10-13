@@ -4,7 +4,7 @@
  * 앱이 실행되면 브라우저가 백그라운드로 전환(visibilitychange/pagehide)되므로,
  * 일정 시간 안에 화면이 숨겨지지 않으면 "앱 없음"으로 보고 다음 단계로 넘어갑니다.
  */
-export type RouteMode = "public" | "car" | "walk";
+export type RouteMode = "public" | "car";
 
 type Goal = { lat: number; lng: number; name: string };
 
@@ -22,7 +22,7 @@ export function naverMapAppUrl(goal: Goal, mode: RouteMode) {
 
 /** 모바일 웹 길찾기 (WGS84 좌표, PC에서도 새 지도 페이지로 연결됨) */
 export function naverMapWebUrl(goal: Goal, mode: RouteMode) {
-  const pathType = { car: 0, public: 1, walk: 2 }[mode];
+  const pathType = { car: 0, public: 1 }[mode];
   const params = new URLSearchParams({
     menu: "route",
     ename: goal.name,
