@@ -1,5 +1,7 @@
 import { wedding } from "@/config/wedding";
 import CopyButton from "./CopyButton";
+import DirectionsButtons from "./DirectionsButtons";
+import NaverMap from "./NaverMap";
 import Reveal from "./Reveal";
 import SectionTitle from "./SectionTitle";
 
@@ -30,13 +32,9 @@ export default function Location() {
         )}
       </div>
       <div className="location__map">
-        <iframe
-          title={`${venue.name} 지도`}
-          src={`https://maps.google.com/maps?q=${venue.lat},${venue.lng}&z=16&hl=ko&output=embed`}
-          loading="lazy"
-          referrerPolicy="no-referrer-when-downgrade"
-        />
+        <NaverMap lat={venue.lat} lng={venue.lng} name={venue.name} />
       </div>
+      <DirectionsButtons />
       <div className="location__apps">
         {links.map((l) => (
           <a key={l.label} href={l.href} target="_blank" rel="noopener noreferrer">

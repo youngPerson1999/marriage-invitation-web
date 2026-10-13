@@ -11,7 +11,7 @@ Next.js 16 (App Router) 기반 모바일 청첩장입니다. Vercel 배포에 �
 | 프로필 | 신랑 · 신부 소개 |
 | 달력 | 예식 월 달력(공휴일 표시), 실시간 카운트다운, 함께한 날 |
 | 갤러리 | 3열 그리드 + 더보기, 스와이프/키보드 지원 라이트박스 |
-| 오시는 길 | 지도, 주소 복사, 네이버/카카오/티맵 길찾기, 교통편 |
+| 오시는 길 | 네이버 지도(Dynamic Map), 네이버 지도 길찾기(대중교통/자동차/도보), 주소 복사, 카카오맵/티맵, 교통편 |
 | 참석 의사 | 첫 방문 시 팝업(오늘 하루 보지 않기) + 응답 폼 → `/api/rsvp` |
 | 마음 전하실 곳 | 신랑측/신부측 계좌 아코디언 + 복사 |
 | 공유 | 카카오톡 공유(선택), Web Share API, 링크 복사 |
@@ -40,6 +40,20 @@ npm run build   # 프로덕션 빌드 확인
 3. (선택) **Settings → Environment Variables** 에 `.env.example` 항목 설정
    - `RSVP_ADMIN_KEY`: 응답 조회 `https://도메인/api/rsvp?key=키` · CSV 다운로드 `&format=csv`
    - `NEXT_PUBLIC_KAKAO_JS_KEY`: 카카오톡 공유 버튼 활성화
+   - `NEXT_PUBLIC_NAVER_MAP_CLIENT_ID`: 네이버 지도 표시 (아래 참고)
+
+### 네이버 지도 설정
+
+1. [네이버 클라우드 플랫폼 콘솔](https://console.ncloud.com) → **Services → Application Services → Maps** → Application 등록
+2. API 선택에서 **Dynamic Map** 체크
+3. **Web 서비스 URL** 에 `http://localhost:3000`, `https://<프로젝트>.vercel.app`, 커스텀 도메인을 등록
+4. 발급된 **Client ID** 를 `NEXT_PUBLIC_NAVER_MAP_CLIENT_ID` 에 설정 후 재배포
+   (키가 없거나 인증에 실패하면 지도 영역에 장소명만 표시되고, 길찾기 버튼은 그대로 동작합니다.)
+
+`src/config/wedding.ts` 의 `venue.lat`, `venue.lng` 를 예식장의 정확한 좌표로 바꿔주세요.
+(네이버 지도에서 장소 우클릭 → 좌표 확인)
+
+**길찾기 버튼 동작**: 모바일에서는 네이버 지도 앱(`nmap://`) → 없으면 네이버 앱 인앱 브라우저 → 없으면 네이버 지도 모바일 웹 순서로 열립니다. PC에서는 새 탭으로 웹 길찾기가 열립니다.
 4. (선택) **Analytics / Speed Insights** 탭에서 활성화하면 방문 통계·성능 지표가 수집됩니다.
 
 ## 성능 · 최적화 포인트
@@ -48,5 +62,5 @@ npm run build   # 프로덕션 빌드 확인
 - `next/image` + AVIF/WebP, 커버 사진만 `priority` 로 LCP 최적화, 나머지는 lazy load
 - `next/font` 로 폰트를 self-host (외부 폰트 요청·레이아웃 이동 없음)
 - 카운트다운은 `useSyncExternalStore` 로 하이드레이션 불일치 없이 클라이언트에서만 계산
-- 지도 iframe·카카오 SDK·배경음악은 지연 로딩 (`loading="lazy"`, `lazyOnload`, `preload="none"`)
+- 네이버 지도 SDK는 지도 영역이 화면 근처에 올 때만 로드, 카카오 SDK·배경음악도 지연 로딩
 - 개인정보 보호를 위해 검색엔진 `noindex` (메신저 미리보기는 정상 동작)
