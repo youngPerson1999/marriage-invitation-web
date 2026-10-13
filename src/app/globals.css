@@ -619,6 +619,9 @@ img {
 .naver-map {
   position: absolute;
   inset: 0;
+  /* 네이버 지도 SDK가 컨테이너를 position: relative 로 바꿔도 크기가 유지되도록 명시 */
+  width: 100%;
+  height: 100%;
 }
 .naver-map--fallback {
   display: grid;
