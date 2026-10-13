@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
-import { Cormorant_Garamond, Gowun_Dodum } from "next/font/google";
+import { Gowun_Dodum } from "next/font/google";
+import localFont from "next/font/local";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { wedding } from "@/config/wedding";
@@ -13,9 +14,10 @@ const sans = Gowun_Dodum({
   variable: "--font-sans",
   preload: false, // 한글 글리프는 unicode-range 단위로 필요한 만큼만 로드
 });
-const serif = Cormorant_Garamond({
-  weight: ["400", "500"],
-  subsets: ["latin"],
+// Cormorant Garamond(가변 폰트, latin 서브셋)는 파일을 직접 포함해 빌드 시 외부 요청 없이 사용
+const cormorant = localFont({
+  src: "./fonts/CormorantGaramond-latin.woff2",
+  weight: "300 700",
   display: "swap",
   variable: "--font-en",
 });
@@ -52,7 +54,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="ko" className={`${sans.variable} ${serif.variable}`}>
+    <html lang="ko" className={`${sans.variable} ${cormorant.variable}`}>
       <body>
         {children}
         <Analytics />
