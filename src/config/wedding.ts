@@ -20,15 +20,15 @@ export type Account = {
 
 export const wedding = {
   /** 예식 일시 (한국 시간, ISO 8601) */
-  date: "2027-10-23T12:30:00+09:00",
+  date: "2028-03-25T13:30:00+09:00",
   /** 처음 만난 날 ("함께 보낸 소중한 날" 계산용) */
   firstMetDate: "2022-01-11T00:00:00+09:00",
   /** 달력에 빨간 날로 표시할 공휴일 (YYYY-MM-DD) */
-  holidays: ["2027-10-03", "2027-10-04", "2027-10-09", "2027-10-11"],
+  holidays: ["2028-03-01"],
 
   groom: {
-    name: "김진호",
-    shortName: "진호",
+    name: "고영인",
+    shortName: "영인",
     phone: "010-0000-0000",
     relation: "아들",
     father: { name: "김건호", deceased: true, phone: "010-0000-0000" } as Person,
@@ -42,8 +42,8 @@ export const wedding = {
     ],
   },
   bride: {
-    name: "이나은",
-    shortName: "나은",
+    name: "선나리",
+    shortName: "나리",
     phone: "010-0000-0000",
     relation: "딸",
     father: { name: "이주명", deceased: true, phone: "010-0000-0000" } as Person,
@@ -58,25 +58,18 @@ export const wedding = {
   },
 
   venue: {
-    name: "더채플앳청담",
-    hall: "커티지홀, 3층",
-    address: "서울 강남구 선릉로 757",
-    tel: "02-0000-0000",
+    name: "고려대학교 교우회관",
+    hall: "권오섭홀",
+    address: "서울 성북구 개운사길 76",
+    /** 비워두면 표시하지 않음 */
+    tel: "" as string,
     /** 지도 앱 딥링크/검색에 사용되는 좌표 */
-    lat: 37.5226,
-    lng: 127.0418,
+    lat: 37.5893,
+    lng: 127.0335,
     transport: [
       {
         title: "지하철",
-        lines: ["7호선 강남구청역 3-1번 출구 도보 10분", "수인분당선 압구정로데오역 4번 출구 도보 7분"],
-      },
-      {
-        title: "버스",
-        lines: ["간선 301, 342, 472 · 지선 3011, 4412", "‘강남구청’ 정류장 하차"],
-      },
-      {
-        title: "주차",
-        lines: ["건물 내 지하 주차장 이용 (2시간 무료)"],
+        lines: ["6호선 고려대역 2번 출구 도보 5분"],
       },
     ],
   },
@@ -111,12 +104,12 @@ export const wedding = {
 
   accounts: {
     groom: [
-      { bank: "신한은행", number: "110-000-000000", holder: "김진호" },
+      { bank: "신한은행", number: "110-000-000000", holder: "고영인" },
       { bank: "국민은행", number: "000000-00-000000", holder: "김건호" },
       { bank: "우리은행", number: "1002-000-000000", holder: "이미자" },
     ] as Account[],
     bride: [
-      { bank: "하나은행", number: "000-000000-00000", holder: "이나은" },
+      { bank: "하나은행", number: "000-000000-00000", holder: "선나리" },
       { bank: "농협", number: "000-0000-0000-00", holder: "유수지" },
     ] as Account[],
   },
@@ -126,8 +119,8 @@ export const wedding = {
 
   /** 공유/검색 미리보기 */
   meta: {
-    title: "김진호 ♥ 이나은 결혼합니다",
-    description: "2027년 10월 23일 토요일 낮 12시 30분, 더채플앳청담 커티지홀",
+    title: "고영인 ♥ 선나리 결혼합니다",
+    description: "2028년 3월 25일 토요일 오후 1시 30분, 고려대학교 교우회관 권오섭홀",
     ogImage: "/images/og.jpg",
   },
 } as const;
